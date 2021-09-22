@@ -1,0 +1,7 @@
+{
+  "name": "streaming-box",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

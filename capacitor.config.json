@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "streaming-box",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
