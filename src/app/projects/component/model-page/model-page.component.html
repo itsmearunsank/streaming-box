@@ -1,0 +1,106 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModel()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-progress-bar *ngIf="isLoading" type="indeterminate"></ion-progress-bar>
+
+  <div style="background: linear-gradient(45deg, black, transparent);" *ngIf="!isVideoEnabled">
+    <ion-img class="screen-resize" [src]="backGroundImage"></ion-img>
+  </div>
+
+  <div class="open-video" *ngIf="isVideoEnabled">
+    <iframe [src]="videoUrl" allowfullscreen></iframe>
+  </div>
+
+  <div>
+    <div class="ion-margin-start">
+      <ion-toolbar>
+        <h3>{{title}}</h3>
+        <ion-buttons slot="primary" (click)="playVideo()" *ngIf="!isVideoEnabled && videoUrl">
+          <ion-button color="secondary">
+            <ion-icon style="font-size: 40px;" name="play-circle-outline"></ion-icon>
+            PLAY
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <div>
+        <ion-toolbar>
+          <div class="ion-margin-bottom">
+            <ion-chip color="dark" outline>ReleaseDate: {{releaseDate}}</ion-chip>
+            <ion-chip color="dark" outline>Duration: {{runtime}}</ion-chip>
+            <ion-chip color="dark" outline>{{voterRating}}</ion-chip>
+          </div>
+        </ion-toolbar>
+      </div>
+      <ion-toolbar>
+        <ion-text>{{overview}}</ion-text>
+      </ion-toolbar>
+    </div>
+  </div>
+
+
+  <div *ngIf="castItemList.length > 0">
+    <ion-list>
+      <ion-list-header>
+        <h3>Casting</h3>
+      </ion-list-header>
+
+      <ion-item *ngFor="let castItem of castItemList">
+        <ion-avatar slot="start">
+          <img *ngIf="castItem.profile_path; else personDefaulIcon" src="{{castItem.profile_path}}">
+          <ng-template #personDefaulIcon>
+            <ion-icon style="font-size: 48px;" name="person-circle-outline"></ion-icon>
+          </ng-template>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{castItem.name}}</h2>
+          <h3>{{castItem.character}}</h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngIf="crewItemList.length > 0">
+    <ion-list>
+      <ion-list-header>
+        <h3>Casting</h3>
+      </ion-list-header>
+
+      <ion-item *ngFor="let crewItem of crewItemList">
+        <ion-avatar slot="start">
+          <img *ngIf="crewItem.profile_path; else personDefaulIcon" src="{{crewItem.profile_path}}">
+          <ng-template #personDefaulIcon>
+            <ion-icon style="font-size: 48px;" name="person-circle-outline"></ion-icon>
+          </ng-template>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{crewItem.name}}</h2>
+          <h3>{{crewItem.department}}</h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+
+  <ion-grid fixed=true *ngIf="appRecommendationsContainer.length > 0">
+      <ion-list>
+        <ion-item>
+          <ion-label style="font-size: 18px;">Recommendations</ion-label>
+        </ion-item>
+      </ion-list>
+    <ion-row>
+      <ion-col *ngFor="let item of appRecommendationsContainer" size-lg="2" size-md="4" size-sm="6" size-xs="6">
+        <app-card [title]="item.title" [image]="item.image" [model]="item.modelItem" [voterRating]="item.voterRating"
+          (cardEventTrigger)="cardEventListener($event)">
+        </app-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

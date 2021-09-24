@@ -1,17 +1,53 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons class="ion-margin-start" slot="start">
+      <ion-icon style="font-size: 48px;" name="play-circle"></ion-icon>
+    </ion-buttons>
     <ion-title>
-      Tab 2
+      Tv Shows
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-list>
+    <app-slider [sliderInputValue]="sliderContainer" (sliderEventTrigger)="cardEventListener($event)"></app-slider>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+    <ion-grid fixed=true>
+      <div>
+        <ion-list>
+          <ion-item>
+            <ion-label>Discover Movies by Genre</ion-label>
+            <ion-icon style="font-size: 24px;" name="filter"></ion-icon>
+            <ion-select placeholder="Select Genre Options" [value]="genreSelectedValue"
+              (ionChange)=genreSelectionChanged($event) multiple>
+              <ion-select-option *ngFor="let genre of genreContainerList" value={{genre.id}}>{{genre.name}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label style="font-size: 18px;">Popular Movies</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <ion-row>
+        <ion-col *ngFor="let item of appCardContainer" size-lg="2" size-md="4" size-sm="6" size-xs="6">
+          <app-card [title]="item.title" [image]="item.image" [model]="item.modelItem" [voterRating]="item.voterRating"
+          (cardEventTrigger)="cardEventListener($event)">
+          </app-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+  </ion-list>
 </ion-content>
+

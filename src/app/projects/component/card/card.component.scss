@@ -1,0 +1,32 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  margin: 5px 0;
+  background-color: #282c34;
+  border-radius: 8px;
+  position: relative;
+  color:white;
+  height: 100%;
+  cursor: pointer;
+
+  .badge {
+    top: 4px;
+    right: 4px;
+    transform: scale(1) translate(50%, -50%);
+    transform-origin: 100% 0%;
+    position: absolute;
+  }
+}
+
+.card:hover {
+  background-color: red;
+  color: white;
+}
+
+.text-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px;
+}
